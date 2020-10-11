@@ -1,7 +1,7 @@
 // Creator : Dipan Nama
 // Roll No : IUT-820-10455
 // Submission Date : 12-10-2020
-// instructor : Bhavna De
+// instructor : Bhabna De
 
 #include <stdio.h>
 
