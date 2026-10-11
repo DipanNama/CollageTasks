@@ -1,0 +1,13 @@
+const t=require('node:test'),a=require('node:assert/strict'),{execFileSync:run}=require('node:child_process'),s=require('./site/trace');
+t('prefix values',()=>a.deepEqual(s.trace(10,'prefix').at(-1),{line:'k = ++i;',i:12,j:11,k:12,note:'Increment i first, then assign its new value to k.'}));
+t('postfix values',()=>{const r=s.trace(10,'postfix');a.equal(r[1].i,11);a.equal(r[1].j,10);a.equal(r[2].k,11);a.equal(r[2].i,12);});
+t('not yet assigned',()=>{const r=s.trace(1,'prefix');a.equal(r[0].j,null);a.equal(r[1].k,null);});
+t('negative',()=>a.equal(s.trace(-2,'postfix')[2].i,0));
+t('bounds',()=>{for(const v of [-1000000,1000000])a.equal(s.trace(v,'prefix')[2].i,v+2);});
+t('parser',()=>{for(const x of ['','1.5','1e3','NaN','Infinity','<img>','1000001','-1000001'])a.throws(()=>s.parse(x));a.equal(s.parse(' -12 '),-12);});
+t('bad mode',()=>a.throws(()=>s.trace(0,'anything')));
+t('bad value',()=>{for(const v of [NaN,Infinity,1.5,1000001])a.throws(()=>s.trace(v,'prefix'));});
+t('C parity',()=>{for(const v of [-1000000,-20,0,10,1000000]){const text=run('/tmp/increment-test',[String(v)],{encoding:'utf8'});for(const mode of ['prefix','postfix']){const r=s.trace(v,mode)[2];a.ok(text.includes(`${mode}: j=${r.j} k=${r.k} i=${r.i}`));}a.ok(text.includes('undefined behavior'));}});
+t('C invalid args',()=>{for(const v of ['1.5','1e3','1000001','-1000001','999999999999999999999999'])a.throws(()=>run('/tmp/increment-test',[v],{stdio:'pipe'}));});
+t('C default',()=>a.ok(run('/tmp/increment-test',{encoding:'utf8'}).startsWith('prefix: j=11 k=12 i=12')));
+t('C usage',()=>a.throws(()=>run('/tmp/increment-test',['1','2'],{stdio:'pipe'})));
