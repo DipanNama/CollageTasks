@@ -1,0 +1,1 @@
+{"name":"c-increment-lab","version":"1.0.0","private":true,"scripts":{"test":"cc -std=c17 -Wall -Wextra -Werror -pedantic -fsanitize=undefined C_Programming_Assignment1.c -o /tmp/increment-test && node --test test.cjs","build":"node build.cjs"}}
