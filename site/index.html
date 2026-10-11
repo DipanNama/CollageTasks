@@ -1,0 +1,79 @@
+<!doctype html><html lang="en" class="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Understand prefix and postfix increment in C with a sequenced step trace and tested C source."><title>C Increment Lab - CollageTasks</title><link rel="stylesheet" href="style.css"></head><body><main><header><div class="brand">CollageTasks <span>by Dipan Nama</span></div><button id="theme" aria-label="Switch color theme"><span class="tile"><!-- @license lucide-static v1.54.0 - ISC -->
+<svg class="icon"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+</span></button></header><section class="intro"><span class="pill">C increment lab</span><h1>Same increment. Different moment.</h1><p>See when ++ changes a value, and when that value gets assigned.</p></section><section class="layout"><div class="frame"><form id="form" class="inner"><h2>Try a starting value.</h2><label for="start">Starting integer</label><input id="start" value="10" maxlength="20" inputmode="numeric"><div class="modes" role="group" aria-label="Increment mode"><button type="button" id="prefix" aria-pressed="true">++i Prefix</button><button type="button" id="postfix" aria-pressed="false">i++ Postfix</button></div><button type="submit" class="primary">Start trace <span class="tile"><!-- @license lucide-static v1.54.0 - ISC -->
+<svg class="icon"
+  class="lucide lucide-arrow-up-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M7 7h10v10" />
+  <path d="M7 17 17 7" />
+</svg>
+</span></button><button type="button" class="secondary" id="sample">Load example</button><p class="hint">Whole numbers from -1,000,000 to 1,000,000. Each operation is its own statement.</p><div id="notice" class="notice" role="status" aria-live="polite"></div></form></div><div><div class="result-head"><h2 id="heading">Prefix increment</h2><span class="step-meta" id="meta">Ready to begin</span></div><div class="variables"><div class="variable"><small>i</small><strong id="i">-</strong></div><div class="variable"><small>j</small><strong id="j">-</strong></div><div class="variable"><small>k</small><strong id="k">-</strong></div></div><div class="codebox" id="code" aria-label="C statements"></div><div class="explanation" aria-live="polite"><strong id="title">Start a trace.</strong><p id="detail">Pick prefix or postfix, then follow the statements.</p></div><div class="controls"><button id="prev"><span class="tile"><!-- @license lucide-static v1.54.0 - ISC -->
+<svg class="icon"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</span>Back</button><button id="next">Next statement <span class="tile"><!-- @license lucide-static v1.54.0 - ISC -->
+<svg class="icon"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span></button><button id="reset" class="push">Reset</button></div><button id="export">Export trace JSON <span class="tile"><!-- @license lucide-static v1.54.0 - ISC -->
+<svg class="icon"
+  class="lucide lucide-download"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 15V3" />
+  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+  <path d="m7 10 5 5 5-5" />
+</svg>
+</span></button></div></section><section class="warning"><strong>A single printf is a different problem.</strong><code>printf("%d %d %d", i, ++i, i++);</code><p>The original assignment included this expression. In C it has unsequenced reads and modifications of i: undefined behavior. There is no guaranteed output to predict. This lab only shows separate, sequenced statements.</p></section><section class="notes"><div><strong>Prefix: update first</strong><p>In j = ++i, increment i, then assign the new value to j.</p></div><div><strong>Postfix: use the old value</strong><p>In j = i++, j receives the old value. i has increased by the end of the statement.</p></div><div><strong>A trace, not a compiler</strong><p>The browser simulates these exact statements. Download the strict-warning-tested C source to compile and run them.</p></div></section><section class="bottom"><p><code>cc -std=c17 -Wall -Wextra -Werror increment.c -o increment</code><br><code>./increment 10</code></p><a href="increment.c" download>Download C source</a></section><div class="divider"></div><footer><span>Built by Dipan Nama. Only theme is saved.</span><a href="https://github.com/DipanNama/CollageTasks" target="_blank" rel="noopener noreferrer">Source & assignment history</a></footer></main><script src="trace.js"></script><script src="app.js"></script></body></html>
