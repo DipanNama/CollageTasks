@@ -1,0 +1,1 @@
+const f=require('node:fs');f.rmSync('dist',{recursive:true,force:true});f.cpSync('site','dist',{recursive:true});f.copyFileSync('C_Programming_Assignment1.c','dist/increment.c');f.writeFileSync('dist/.nojekyll','');console.log('Built static lab and C source download');
