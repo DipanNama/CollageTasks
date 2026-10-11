@@ -1,44 +1,38 @@
-// Creator : Dipan Nama
-// Roll No : IUT-820-10455
-// Submission Date : 12-10-2020
-// instructor : Bhabna De
-
+/* Dipan Nama's increment assignment, with defined and sequenced operations.
+ * The original printf("%d %d %d", i, ++i, i++) has undefined behavior.
+ * See ORIGINAL_ASSIGNMENT.c for the historical source; do not rely on its output.
+ */
 #include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 
-int prefix(int i){
-  printf("Output of prefix function\n");
-  int j,k;
-  j = ++i; // increment 1
-  printf("j = %d\n",j); // 11
-  k = ++i; // increment 1
-  printf("k = %d\n",k); // 12
-
-  return 0;
-}
-
-int postfix(int i){
-  printf("Output of postfix function\n");
-  int j,k;
-  j = i++; // 
-  printf("j = %d\n",j); // 10
-  k = i++; // 
-  printf("k = %d\n",k); // 11
-  return 0;
-}
-
-int exception(int i){
-  printf("The value of i is: %d %d %d\n", i, ++i, i++); // 10 11 11
-  return 0;
-}
-
-int main(){
-  int i; // Declering veriablr i
-  // printf("Please enter a number");
-  // scanf("%d", &i); // Taking input from the user
-  i = 10;
-  prefix(i); // 11 12
-  postfix(i); // 10 11
-  exception(i); // 10 11 11
-
-  return 0;
+int main(int argc, char **argv) {
+    long start = 10;
+    if (argc > 2) {
+        fprintf(stderr, "Usage: increment [starting_integer]\n");
+        return 1;
+    }
+    if (argc == 2) {
+        char *end;
+        errno = 0;
+        start = strtol(argv[1], &end, 10);
+        if (errno != 0 || end == argv[1] || *end != '\0') {
+            fprintf(stderr, "Use an integer from -1000000 to 1000000\n");
+            return 1;
+        }
+    }
+    if (start < -1000000 || start > 1000000) {
+        fprintf(stderr, "Use an integer from -1000000 to 1000000\n");
+        return 1;
+    }
+    int i = (int)start;
+    int j = ++i;
+    int k = ++i;
+    printf("prefix: j=%d k=%d i=%d\n", j, k, i);
+    i = (int)start;
+    j = i++;
+    k = i++;
+    printf("postfix: j=%d k=%d i=%d\n", j, k, i);
+    puts("Unsequenced read/modifications in a single printf: undefined behavior, no predicted output.");
+    return 0;
 }
